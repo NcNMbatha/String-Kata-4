@@ -15,8 +15,7 @@
         {
             int biggestAllowedNumber = 1000;
             return (from number in ExtractNumbersFromTextInput(numbersToAdd)
-                    where number <= biggestAllowedNumber
-                    select number).Sum();
+                    where number <= biggestAllowedNumber select number).Sum();
         }
 
         public List<int> ExtractNumbersFromTextInput(string NumbersToExtract)
@@ -35,8 +34,8 @@
                     return delimeterList.Union(DelimetersInBrackets(numbersWithDelimeters)).ToList();
 
                 var numbersWithDelimetersSplit = numbersWithDelimeters.Split("\n");
-                int index = numbersWithDelimetersSplit[0].Length;
-                delimeterList.Add(numbersWithDelimetersSplit[0].Substring(2, index - 2));
+                int firstHalfLength = numbersWithDelimetersSplit[0].Length;
+                delimeterList.Add(numbersWithDelimetersSplit[0].Substring(2, firstHalfLength - 2));
             }
             return delimeterList;
         }
