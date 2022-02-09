@@ -20,18 +20,23 @@
 
         public List<int> ExtractNumbersFromTextInput(string NumbersToExtract)
         {
-            int isInteger = 0;
-            string[] numbersArray = NumbersToExtract.Split(DelimeterList(NumbersToExtract).ToArray(), StringSplitOptions.None);
-            return numbersArray.Where(x => int.TryParse(x, out isInteger)).Select(x => isInteger).ToList();
+            if (NumbersToExtract.Contains("["))
+            {
+                var numbNumbersToExtractersSplit = NumbersToExtract.Split("\n");
+                string[] numbersArray = numbNumbersToExtractersSplit[1].Split(GetDelimeterList(NumbersToExtract).ToArray(), StringSplitOptions.None);
+                return numbersArray.Select(int.Parse).ToList();
+            }
+            return NumbersToExtract.Split(GetDelimeterList(NumbersToExtract).ToArray(),StringSplitOptions.None).Select(int.Parse).ToList();
+            
         }
 
-        public List<string> DelimeterList(string numbersWithDelimeters)
+        public List<string> GetDelimeterList(string numbersWithDelimeters)
         {
             List<string> delimeterList = new List<string>() { ",", "\n" };
             if (numbersWithDelimeters.StartsWith("//"))
             {
                 if (numbersWithDelimeters.Substring(2, 1) == "[")
-                    return delimeterList.Union(DelimetersInBrackets(numbersWithDelimeters)).ToList();
+                    return delimeterList.Union(ExtractDelimetersInBrackets(numbersWithDelimeters)).ToList();
 
                 var numbersWithDelimetersSplit = numbersWithDelimeters.Split("\n");
                 int firstHalfLength = numbersWithDelimetersSplit[0].Length;
@@ -40,7 +45,7 @@
             return delimeterList;
         }
 
-        public List<string> DelimetersInBrackets(string numbersWithDelimeters)
+        public List<string> ExtractDelimetersInBrackets(string numbersWithDelimeters)
         {
             int indexOfClosingSqureBracket = numbersWithDelimeters.LastIndexOf("]");
             string delimeter = numbersWithDelimeters.Substring(3, indexOfClosingSqureBracket - 3).Trim(']');

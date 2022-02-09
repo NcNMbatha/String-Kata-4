@@ -1,6 +1,7 @@
 using KataAttemptFour;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace KataAttemptFourTest
 {
@@ -79,6 +80,27 @@ namespace KataAttemptFourTest
         {
             int results = attemptFour.Add("//[***][%%%%]\n1***2%%%%3");
             int expected = 6;
+            Assert.AreEqual(expected, results);
+        }
+        [Test]
+        public void Given_NumbersWithDelimeters_When_GetDelimeterList_Should_Return_ListOfDelimeters()
+        {
+            List<string> results = attemptFour.GetDelimeterList("//[***][%%%%]\n1***2%%%%3");
+            List<string> expected = new List<string>() { ",", "\n", "***", "%%%%" };
+            Assert.AreEqual(expected, results);
+        }
+        [Test]
+        public void Given_NumbersWithDelimetersInBrackets_When_ExtractDelimetersInBrackets_Should_Return_ListOfExtractedDelimeters()
+        {
+            List<string> results = attemptFour.ExtractDelimetersInBrackets("//[***][%%%%]\n1***2%%%%3");
+            List<string> expected = new List<string>() { "***", "%%%%" };
+            Assert.AreEqual(expected, results);
+        }
+        [Test]
+        public void Given_NumbersWithDelimeters_When_ExtractNumbersFromTextInput_Should_Return_ListOfExtractedNumbers()
+        {
+            List<int> results = attemptFour.ExtractNumbersFromTextInput("//[*][%]\n1*2%3");
+            List<int> expected = new List<int>() { 1, 2, 3 };
             Assert.AreEqual(expected, results);
         }
     }
